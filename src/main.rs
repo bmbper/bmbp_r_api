@@ -4,6 +4,9 @@ use salvo::{Listener, Router, Server};
 mod core;
 mod embed;
 mod router;
+mod apc;
+mod bpc;
+mod orm;
 
 #[tokio::main]
 async fn main() {

@@ -8,34 +8,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/bmbp_v2.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/embed.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/router.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco-icon.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco-iconfont.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/axios/1.7.2/axios.config.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/axios/1.7.2/axios.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react-dom.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react-dom.profiling.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react.production.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/static/lib/lib/vchart/1.12.12/vchart.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/apc/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/bpc/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/abc/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/abc/resp.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/auth/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/rbac/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/work/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/orm/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/tpc/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,33 +42,36 @@
   <component name="MacroExpansionManager">
     <option name="directoryName" value="rh9v047r" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2qfc0clUCxCi8QTHVdY7Crk2udh" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Run bmbp_v2.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/02app/bmbp_v2/web/static/lib",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "org.rust.first.attach.projects": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Run bmbp_v2.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/bmbp/Code/02bmbp/02app/bmbp_v2/web/static/lib&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/web/static/lib" />
