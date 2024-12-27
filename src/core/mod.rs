@@ -3,3 +3,4 @@ mod work;
 mod setting;
 mod rbac;
 mod abc;
+mod router;
