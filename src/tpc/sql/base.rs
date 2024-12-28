@@ -1,3 +1,4 @@
+
 pub trait BmbpTableIdent {
     fn table_name() -> String;
     fn table_alias() -> String;
@@ -22,19 +23,26 @@ pub struct BmbpDeleteSql {}
 
 pub enum BmbpTable {
     SchemaTable(BmbpSchemaTable),
-    QueryTable(BmbpQuerySql) ,
-    StaticTable(BmbpStaticTable)
+    QueryTable(BmbpQueryTable),
+    StringTable(BmbpStringTable)
 }
 
 pub struct BmbpSchemaTable {
+    pub table_schema: String,
     pub table_name: String,
     pub table_alias: String,
 }
 
-pub struct BmbpStaticTable {
+pub struct BmbpQueryTable{
+    table_name: BmbpQuerySql,
+    table_alias: String,
+}
+
+pub struct BmbpStringTable {
     pub table_name: String,
     pub table_alias: String,
 }
+
 
 pub enum BmbpColumn{
     SchemaColumn(BmbpSchemaColumn),
