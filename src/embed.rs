@@ -11,7 +11,7 @@ struct StaticAssets;
 #[derive(RustEmbed)]
 #[folder = "web/templates"]
 pub(crate) struct PageAssets;
-fn init_tera() -> Arc<Tera> {
+pub fn init_tera() -> Arc<Tera> {
     let tera = Tera::new("web/templates/**/*").unwrap_or_else(|e| {
         panic!("Failed to initialize Tera templates: {}", e);
     });

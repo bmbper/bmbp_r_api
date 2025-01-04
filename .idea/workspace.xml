@@ -7,21 +7,37 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="init: 树节点">
+    <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="init: sql builder">
+      <change afterPath="$PROJECT_DIR$/src/core/rbac/route.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/route.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/route.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/work/action.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/work/route.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/work/view.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/ctx.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/web/templates/core/work/workbench.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/orm/sql.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tpc/sql/base.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/tpc/sql/base.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/auth/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/rbac/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/rbac/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/router.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/setting/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/setting/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/embed.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/embed.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/orm/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/orm/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:test" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="RsBuildProfile:dev" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Rust File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -44,13 +60,14 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Cargo.Run bmbp_v2.executor": "Run",
+    "Cargo.Run bmbp_v2.executor": "Debug",
     "Cargo.Test core::setting::bean::test::test_dict.executor": "Debug",
+    "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/02app/bmbp_v2/web/static/lib",
+    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/02app/bmbp_v2/src/core/setting",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -69,10 +86,15 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core/setting" />
       <recent name="$PROJECT_DIR$/web/static/lib" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web/templates/core/work" />
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
   </component>
-  <component name="RunManager" selected="Cargo.Test core::setting::bean::test::test_dict">
+  <component name="RunManager" selected="Cargo.Run bmbp_v2">
     <configuration name="Run bmbp_v2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package bmbp_v2 --bin bmbp_v2" />
@@ -111,8 +133,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Test core::setting::bean::test::test_dict" />
         <item itemvalue="Cargo.Run bmbp_v2" />
+        <item itemvalue="Cargo.Test core::setting::bean::test::test_dict" />
       </list>
     </recent_temporary>
   </component>
@@ -128,6 +150,11 @@
       <option name="presentableId" value="Default" />
       <updated>1735056847232</updated>
       <workItem from="1735056848473" duration="1410000" />
+      <workItem from="1735369834004" duration="76000" />
+      <workItem from="1735446916510" duration="2470000" />
+      <workItem from="1735926078185" duration="913000" />
+      <workItem from="1736001357172" duration="57000" />
+      <workItem from="1736001452164" duration="2422000" />
     </task>
     <task id="LOCAL-00001" summary="init: init">
       <option name="closed" value="true" />
@@ -161,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735353775331</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="init: sql builder">
+      <option name="closed" value="true" />
+      <created>1735362412796</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1735362412796</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +206,7 @@
     <MESSAGE value="init: init" />
     <MESSAGE value="init: 引入sqlx" />
     <MESSAGE value="init: 树节点" />
-    <option name="LAST_COMMIT_MESSAGE" value="init: 树节点" />
+    <MESSAGE value="init: sql builder" />
+    <option name="LAST_COMMIT_MESSAGE" value="init: sql builder" />
   </component>
 </project>
