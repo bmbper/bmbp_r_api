@@ -1,6 +1,4 @@
-use salvo::prelude::Redirect;
 use salvo::{handler, Depot, Request, Response};
-use tracing_log::log::info;
 
 
 #[handler]

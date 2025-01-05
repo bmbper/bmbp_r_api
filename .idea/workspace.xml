@@ -7,25 +7,33 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="init: sql builder">
-      <change afterPath="$PROJECT_DIR$/src/core/rbac/route.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/route.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/setting/route.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/work/action.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/work/route.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/work/view.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ctx.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/templates/core/work/workbench.html" afterDir="false" />
+    <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="init: 初始化模板">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/auth/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/rbac/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/rbac/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/router.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/auth/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/setting/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/action.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/action.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/core/work/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embed.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/embed.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/view.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ctx.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/embed.rs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/orm/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/orm/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco-icon.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco-iconfont.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/axios/1.7.2/axios.config.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/axios/1.7.2/axios.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react-dom.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react-dom.profiling.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react.production.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/vchart/1.12.12/vchart.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/templates/core/work/workbench.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +46,7 @@
       <list>
         <option value="Rust File" />
         <option value="HTML File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -67,7 +76,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/02app/bmbp_v2/src/core/setting",
+    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/02app/bmbp_v2/web/tsx/core/setting",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,6 +85,7 @@
     "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
     "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
     "org.rust.first.attach.projects": "true",
+    "ts.external.directory.path": "/Applications/RustRover.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -86,6 +96,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web/tsx/core/setting" />
+      <recent name="$PROJECT_DIR$/web/tsx/core/rbac" />
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/core/setting" />
       <recent name="$PROJECT_DIR$/web/static/lib" />
     </key>
@@ -154,7 +167,8 @@
       <workItem from="1735446916510" duration="2470000" />
       <workItem from="1735926078185" duration="913000" />
       <workItem from="1736001357172" duration="57000" />
-      <workItem from="1736001452164" duration="2422000" />
+      <workItem from="1736001452164" duration="2533000" />
+      <workItem from="1736084991633" duration="1492000" />
     </task>
     <task id="LOCAL-00001" summary="init: init">
       <option name="closed" value="true" />
@@ -196,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1735362412796</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="init: 初始化模板">
+      <option name="closed" value="true" />
+      <created>1736003992107</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1736003992107</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,6 +229,7 @@
     <MESSAGE value="init: 引入sqlx" />
     <MESSAGE value="init: 树节点" />
     <MESSAGE value="init: sql builder" />
-    <option name="LAST_COMMIT_MESSAGE" value="init: sql builder" />
+    <MESSAGE value="init: 初始化模板" />
+    <option name="LAST_COMMIT_MESSAGE" value="init: 初始化模板" />
   </component>
 </project>
