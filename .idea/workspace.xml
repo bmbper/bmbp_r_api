@@ -7,54 +7,21 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04690401-1d74-43fa-a110-1b60541b5162" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_app/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/table.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/value.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/bean.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/pool.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/builder/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/render/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/tests/test_curd.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="04690401-1d74-43fa-a110-1b60541b5162" name="Changes" comment="改为多模块项目">
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/record.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/column.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/dml.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/dql.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/func.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/ident.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/table.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean/value.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/apc/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/bpc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/bpc/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/abc/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/error.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/abc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/abc/req.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/req.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/abc/resp.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/resp.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/abc/tree.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/tree.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/auth/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/auth/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/auth/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/auth/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/dict/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/bean.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/dict/handler.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/handler.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/dict/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/dict/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/service.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/vars/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/bean.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/vars/handler.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/handler.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/vars/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/config/vars/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/service.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/rbac/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/rbac/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/rbac/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/rbac/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/action.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/work/action.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/work/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/work/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/orm/bean.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/orm/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/orm/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tpc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/tpc/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tpc/sql/base.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/tpc/sql/base.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tpc/sql/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/tpc/sql/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/value.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/orm.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/bean.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +72,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/crates/bmbp_orm/src/sql/bean" />
       <recent name="$PROJECT_DIR$/creates/bmbp_r_api" />
     </key>
   </component>
@@ -144,11 +112,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736360777593</updated>
-      <workItem from="1736360778668" duration="2871000" />
+      <workItem from="1736360778668" duration="4811000" />
     </task>
+    <task id="LOCAL-00001" summary="改为多模块项目">
+      <option name="closed" value="true" />
+      <created>1736363691235</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736363691235</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="改为多模块项目" />
+    <option name="LAST_COMMIT_MESSAGE" value="改为多模块项目" />
   </component>
 </project>
