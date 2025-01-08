@@ -8,32 +8,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="init: 初始化模板">
+      <change afterPath="$PROJECT_DIR$/src/core/abc/error.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/dict/handler.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/dict/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/dict/service.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/vars/handler.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/vars/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/setting/vars/service.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/action.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/action.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/work/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/work/view.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ctx.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/embed.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/router.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco-icon.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco-iconfont.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/arco/2.64.1/arco.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/axios/1.7.2/axios.config.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/axios/1.7.2/axios.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.woff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/iconfont/iconfont.woff2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react-dom.production.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react-dom.profiling.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/react/18.3.1/react.production.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/static/lib/lib/vchart/1.12.12/vchart.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/templates/core/work/workbench.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/abc/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/resp.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/abc/resp.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/setting/bean.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/setting/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/setting/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/setting/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/setting/route.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +34,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Rust File" />
         <option value="HTML File" />
         <option value="TypeScript JSX File" />
+        <option value="Rust File" />
       </list>
     </option>
   </component>
@@ -69,6 +59,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Cargo.Run bmbp_r_api.executor": "Debug",
     "Cargo.Run bmbp_v2.executor": "Debug",
     "Cargo.Test core::setting::bean::test::test_dict.executor": "Debug",
     "DefaultHtmlFileTemplate": "HTML File",
@@ -76,7 +67,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.rust.reset.selective.auto.import": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/02app/bmbp_v2/web/tsx/core/setting",
+    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/bmbp_r_api/src/core/setting/vars",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -96,18 +87,38 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core/setting/vars" />
       <recent name="$PROJECT_DIR$/web/tsx/core/setting" />
       <recent name="$PROJECT_DIR$/web/tsx/core/rbac" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/core/setting" />
-      <recent name="$PROJECT_DIR$/web/static/lib" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/core/setting/vars" />
+      <recent name="$PROJECT_DIR$/src/core/setting/bean" />
+      <recent name="$PROJECT_DIR$/src/core/setting/dict" />
       <recent name="$PROJECT_DIR$/web/templates/core/work" />
       <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run bmbp_v2">
+  <component name="RunManager" selected="Cargo.Run bmbp_r_api">
+    <configuration name="Run bmbp_r_api" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package bmbp_r_api --bin bmbp_r_api" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
+      <envs />
+      <option name="emulateTerminal" value="true" />
+      <option name="channel" value="DEFAULT" />
+      <option name="requiredFeatures" value="true" />
+      <option name="allFeatures" value="false" />
+      <option name="withSudo" value="false" />
+      <option name="buildTarget" value="REMOTE" />
+      <option name="backtrace" value="SHORT" />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run bmbp_v2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="buildProfileId" value="dev" />
       <option name="command" value="run --package bmbp_v2 --bin bmbp_v2" />
@@ -146,6 +157,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Run bmbp_r_api" />
         <item itemvalue="Cargo.Run bmbp_v2" />
         <item itemvalue="Cargo.Test core::setting::bean::test::test_dict" />
       </list>
@@ -169,6 +181,8 @@
       <workItem from="1736001357172" duration="57000" />
       <workItem from="1736001452164" duration="2533000" />
       <workItem from="1736084991633" duration="1492000" />
+      <workItem from="1736088034938" duration="107000" />
+      <workItem from="1736316356767" duration="3479000" />
     </task>
     <task id="LOCAL-00001" summary="init: init">
       <option name="closed" value="true" />
