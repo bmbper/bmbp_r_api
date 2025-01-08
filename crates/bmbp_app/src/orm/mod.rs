@@ -1,9 +1,6 @@
 use sqlx::postgres::PgPoolOptions;
 use sqlx::{Connection, Error, Pool, Postgres};
 use tokio::sync::OnceCell;
-mod bean;
-mod sql;
-
 pub static DB_POOL: OnceCell<Pool<Postgres>> = OnceCell::const_new();
 pub(crate) async fn build_pool() -> Result<(), Error> {
     match PgPoolOptions::new()
@@ -21,4 +18,3 @@ pub(crate) async fn build_pool() -> Result<(), Error> {
         }
     }
 }
-pub use bean::*;

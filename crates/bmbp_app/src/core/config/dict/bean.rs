@@ -1,8 +1,8 @@
 use crate::core::abc::BmbpTree;
-use crate::orm::{BmbpTable, BmbpTableSQL};
+use bmbp_orm::{BmbpTable, BmbpTableSQL};
 use serde::{Deserialize, Serialize};
-use sqlx::{Error, FromRow, Row};
 use sqlx::postgres::PgRow;
+use sqlx::{Error, FromRow, Row};
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -78,6 +78,10 @@ impl BmbpTable for BmbpConfigDict {
             "data_sign".to_string(),
         ]
     }
+
+    fn table_primary_key() -> String {
+        "data_id".to_string()
+    }
 }
 impl BmbpTableSQL<BmbpConfigDict> for BmbpConfigDict {
     fn insert(&self) -> String {
@@ -88,7 +92,7 @@ impl BmbpTableSQL<BmbpConfigDict> for BmbpConfigDict {
         "".to_string()
     }
 }
-impl <'a> FromRow<'a,PgRow> for BmbpConfigDict {
+impl<'a> FromRow<'a, PgRow> for BmbpConfigDict {
     fn from_row(row: &'a PgRow) -> Result<Self, Error> {
         Ok(BmbpConfigDict {
             dict_code: row.try_get("dict_code")?,

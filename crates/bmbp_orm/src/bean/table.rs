@@ -1,15 +1,16 @@
 pub trait BmbpTable {
     fn table_name() -> String;
     fn table_columns() -> Vec<String>;
-    fn table_primary_key() -> String {
-        "data_id".to_string()
-    }
+    fn table_primary_key() -> String;
 }
+
 pub trait BmbpTableSQL<T>
 where
     T: BmbpTable,
 {
+
     fn insert(&self) -> String;
+    fn update(&self) -> String;
     fn insert_all() -> String {
         let mut insert_sql = "".to_string();
         let mut insert_columns = vec![];
@@ -26,7 +27,6 @@ where
         );
         return insert_sql;
     }
-    fn update(&self) -> String;
     fn update_all() -> String {
         let mut insert_sql = "".to_string();
         let mut set_columns = vec![];
@@ -42,7 +42,6 @@ where
         );
         return insert_sql;
     }
-
     fn select() -> String {
         format!(
             "SELECT {} FROM  {}  ",

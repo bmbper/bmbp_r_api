@@ -7,30 +7,54 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="init: 字典管理接口">
-      <change afterPath="$PROJECT_DIR$/src/core/config/dict/handler.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/config/dict/service.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/orm/bean.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/bmbp_v2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/abc/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/abc/error.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/dict/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/dict/bean.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/dict/handler.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/dict/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/dict/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/dict/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/bmbp.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/route.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/vars/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/vars/bean.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/vars/handler.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/vars/handler.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/vars/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/vars/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/setting/vars/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/config/vars/service.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/orm/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/orm/mod.rs" afterDir="false" />
+    <list default="true" id="04690401-1d74-43fa-a110-1b60541b5162" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_app/Cargo.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/table.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/value.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/bean.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/orm/pool.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/builder/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/sql/render/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/tests/test_curd.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/apc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/apc/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/bpc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/bpc/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/error.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/req.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/req.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/resp.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/resp.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/abc/tree.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/tree.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/auth/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/auth/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/auth/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/auth/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/dict/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/bean.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/dict/handler.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/handler.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/dict/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/dict/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/dict/service.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/vars/bean.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/bean.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/vars/handler.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/handler.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/vars/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/config/vars/service.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/config/vars/service.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/rbac/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/rbac/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/rbac/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/rbac/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/action.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/work/action.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/work/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/work/route.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/work/route.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/orm/bean.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/orm/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/orm/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tpc/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/tpc/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tpc/sql/base.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/tpc/sql/base.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tpc/sql/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/tpc/sql/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,8 +65,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="TypeScript JSX File" />
         <option value="Rust File" />
       </list>
     </option>
@@ -51,102 +73,45 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MacroExpansionManager">
-    <option name="directoryName" value="rh9v047r" />
+    <option name="directoryName" value="1G9wn6IC" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 4
-}</component>
-  <component name="ProjectId" id="2qfc0clUCxCi8QTHVdY7Crk2udh" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2rMEvxlWPeqs1EGz3uKk9yA31TP" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Cargo.Run bmbp_r_api.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Run bmbp_v2.executor&quot;: &quot;Debug&quot;,
-    &quot;Cargo.Test core::setting::bean::test::test_dict.executor&quot;: &quot;Debug&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/bmbp/Code/02bmbp/bmbp_r_api/src/core/setting/vars&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
-    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
-    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/RustRover.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
-    ]
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Cargo.Run bmbp_app.executor": "Debug",
+    "Cargo.Run bmbp_r_api.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.rust.reset.selective.auto.import": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/bmbp/Code/02bmbp/bmbp_r_api",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
+    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
+    "org.rust.first.attach.projects": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/core/setting/vars" />
-      <recent name="$PROJECT_DIR$/web/tsx/core/setting" />
-      <recent name="$PROJECT_DIR$/web/tsx/core/rbac" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/core/setting" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/core/setting/vars" />
-      <recent name="$PROJECT_DIR$/src/core/setting/bean" />
-      <recent name="$PROJECT_DIR$/src/core/setting/dict" />
-      <recent name="$PROJECT_DIR$/web/templates/core/work" />
-      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/creates/bmbp_r_api" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run bmbp_r_api">
-    <configuration name="Run bmbp_r_api" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package bmbp_r_api --bin bmbp_r_api" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Run bmbp_v2" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+  <component name="RunManager">
+    <configuration name="Run bmbp_app" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="buildProfileId" value="dev" />
-      <option name="command" value="run --package bmbp_v2 --bin bmbp_v2" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
-      <envs />
-      <option name="emulateTerminal" value="true" />
-      <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
-      <option name="allFeatures" value="false" />
-      <option name="withSudo" value="false" />
-      <option name="buildTarget" value="REMOTE" />
-      <option name="backtrace" value="SHORT" />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
-      <method v="2">
-        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Test core::setting::bean::test::test_dict" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="buildProfileId" value="test" />
-      <option name="command" value="test --package bmbp_v2 --bin bmbp_v2 core::setting::bean::test::test_dict -- --exact" />
+      <option name="command" value="run --package bmbp_app --bin bmbp_app" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
       <option name="emulateTerminal" value="true" />
@@ -164,9 +129,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Cargo.Run bmbp_r_api" />
-        <item itemvalue="Cargo.Run bmbp_v2" />
-        <item itemvalue="Cargo.Test core::setting::bean::test::test_dict" />
+        <item itemvalue="Cargo.Run bmbp_app" />
       </list>
     </recent_temporary>
   </component>
@@ -176,106 +139,16 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5fbe2f14-b9af-4e0f-b964-c4bd1cf76f8e" name="Changes" comment="" />
-      <created>1735056847232</created>
+      <changelist id="04690401-1d74-43fa-a110-1b60541b5162" name="Changes" comment="" />
+      <created>1736360777593</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1735056847232</updated>
-      <workItem from="1735056848473" duration="1410000" />
-      <workItem from="1735369834004" duration="76000" />
-      <workItem from="1735446916510" duration="2470000" />
-      <workItem from="1735926078185" duration="913000" />
-      <workItem from="1736001357172" duration="57000" />
-      <workItem from="1736001452164" duration="2533000" />
-      <workItem from="1736084991633" duration="1492000" />
-      <workItem from="1736088034938" duration="107000" />
-      <workItem from="1736316356767" duration="3989000" />
-      <workItem from="1736320367030" duration="8742000" />
+      <updated>1736360777593</updated>
+      <workItem from="1736360778668" duration="2871000" />
     </task>
-    <task id="LOCAL-00001" summary="init: init">
-      <option name="closed" value="true" />
-      <created>1735310296910</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1735310296910</updated>
-    </task>
-    <task id="LOCAL-00002" summary="init: 引入sqlx">
-      <option name="closed" value="true" />
-      <created>1735318896077</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1735318896077</updated>
-    </task>
-    <task id="LOCAL-00003" summary="init: 引入sqlx">
-      <option name="closed" value="true" />
-      <created>1735350154846</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1735350154846</updated>
-    </task>
-    <task id="LOCAL-00004" summary="init: 树节点">
-      <option name="closed" value="true" />
-      <created>1735353775331</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1735353775331</updated>
-    </task>
-    <task id="LOCAL-00005" summary="init: sql builder">
-      <option name="closed" value="true" />
-      <created>1735362412796</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1735362412796</updated>
-    </task>
-    <task id="LOCAL-00006" summary="init: 初始化模板">
-      <option name="closed" value="true" />
-      <created>1736003992107</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1736003992107</updated>
-    </task>
-    <task id="LOCAL-00007" summary="init: 字典管理接口">
-      <option name="closed" value="true" />
-      <created>1736319871735</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1736319871735</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="init: init" />
-    <MESSAGE value="init: 引入sqlx" />
-    <MESSAGE value="init: 树节点" />
-    <MESSAGE value="init: sql builder" />
-    <MESSAGE value="init: 初始化模板" />
-    <MESSAGE value="init: 字典管理接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="init: 字典管理接口" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/orm/bean.rs</url>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/orm/bean.rs</url>
-          <line>7</line>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
