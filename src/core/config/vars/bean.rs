@@ -4,13 +4,13 @@ use serde::{Deserialize, Serialize};
 #[derive(Default,Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all="camelCase")]
 #[serde(default)]
-pub struct BmbpSettingVars {
+pub struct BmbpConfigVars {
     pub vars_code: String,
     pub vars_parent_code: String,
     pub vars_code_path: String,
     pub vars_name: String,
     pub vars_name_path: String,
-    pub vars_children: Option<Vec<BmbpSettingVars>>,
+    pub vars_children: Option<Vec<BmbpConfigVars>>,
     pub vars_alias: String,
     pub vars_value: String,
     pub vars_type: VarsTypeEnum,
@@ -27,7 +27,7 @@ pub struct BmbpSettingVars {
     pub data_sign: String,
 }
 
-impl BmbpTree<BmbpSettingVars> for BmbpSettingVars {
+impl BmbpTree<BmbpConfigVars> for BmbpConfigVars {
     fn code(&self) -> String {
         self.vars_code.to_string()
     }
@@ -36,7 +36,7 @@ impl BmbpTree<BmbpSettingVars> for BmbpSettingVars {
         self.vars_parent_code.to_string()
     }
 
-    fn children(&self) -> Option<&Vec<BmbpSettingVars>>
+    fn children(&self) -> Option<&Vec<BmbpConfigVars>>
     where
         Self: Sized,
     {

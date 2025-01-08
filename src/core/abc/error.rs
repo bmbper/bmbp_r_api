@@ -11,7 +11,7 @@ pub enum BmbpErrorKind {
     HTTP,
     VALID,
     DB,
-    SQL,
+    SQLX,
     OTHER,
 }
 
@@ -26,5 +26,16 @@ impl Writer for BmbpErr {
             data: None,
         };
         res.render(serde_json::to_string(&resp).unwrap());
+    }
+}
+
+
+impl From<sqlx::Error> for BmbpErr {
+    fn from(e: sqlx::Error) -> Self {
+        BmbpErr {
+            kind: BmbpErrorKind::SQLX,
+            msg: e.to_string(),
+            code: "3000".to_string(),
+        }
     }
 }

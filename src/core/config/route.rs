@@ -1,8 +1,8 @@
-use crate::core::setting::{dict, vars};
+use crate::core::config::{dict, vars};
 use salvo::Router;
 
 pub fn build_setting_route() -> Router {
-    let mut router = Router::with_path("/setting");
+    let mut router = Router::with_path("/config");
     router = router
         .push(
             Router::with_path("/dict")

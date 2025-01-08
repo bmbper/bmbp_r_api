@@ -1,6 +1,6 @@
 use crate::core::auth::build_auth_route;
 use crate::core::rbac::build_rbac_route;
-use crate::core::setting::build_setting_route;
+use crate::core::config::build_setting_route;
 use crate::core::work::build_work_route;
 use salvo::Router;
 

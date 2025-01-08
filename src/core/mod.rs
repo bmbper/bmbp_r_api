@@ -2,7 +2,7 @@ use salvo::Router;
 
 mod auth;
 mod work;
-mod setting;
+mod config;
 mod rbac;
 mod abc;
 mod route;
