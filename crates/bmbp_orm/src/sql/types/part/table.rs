@@ -1,4 +1,5 @@
-use crate::sql::bean::dql::OrmQuery;
+use crate::sql::types::OrmWhere;
+use crate::sql::types::query::OrmQuery;
 
 pub enum OrmTable{
     SchemaTable(OrmSchemaTable),
@@ -18,4 +19,17 @@ pub struct OrmSimpleTable{
 pub struct OrmQueryTable{
     pub query: OrmQuery,
     pub alias: String,
+}
+
+pub struct OrmJoinTable{
+    pub table: OrmTable,
+    pub join_type: JoinType,
+    pub filter: OrmWhere
+}
+
+pub enum JoinType{
+    InnerJoin,
+    LeftJoin,
+    RightJoin,
+    FullJoin,
 }

@@ -1,14 +1,28 @@
-pub trait BmbpTable {
-    fn table_name() -> String;
-    fn table_columns() -> Vec<String>;
-    fn table_primary_key() -> String;
+use crate::OrmTableTrait;
+
+pub trait OrmQuerySqlTrait{
+
+}
+pub trait OrmInsertSqlTrait{
+
 }
 
-pub trait BmbpTableSQL<T>
-where
-    T: BmbpTable,
-{
+pub trait OrmUpdateSqlTrait{
 
+}
+
+pub trait OrmDeleteSqlTrait{
+
+}
+
+pub trait OrmCurdSqlTrait{
+
+}
+
+pub trait OrmSimpleSQLTrait<T>
+where
+    T: OrmTableTrait,
+{
     fn insert(&self) -> String;
     fn update(&self) -> String;
     fn insert_all() -> String {

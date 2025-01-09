@@ -1,6 +1,6 @@
 mod sql;
 mod orm;
-mod bean;
+mod types;
 
 pub use orm::*;
-pub use bean::*;
+pub use types::*;

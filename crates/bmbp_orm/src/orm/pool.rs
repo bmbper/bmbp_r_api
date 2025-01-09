@@ -1,4 +1,4 @@
-use sqlx::{MySql, MySqlPool, PgPool, Pool, Postgres, SqlitePool};
+use sqlx::{MySqlPool, PgPool, SqlitePool};
 
 pub struct BmbpOrmPool{
     pub pool:BmbpOrmPoolInner,

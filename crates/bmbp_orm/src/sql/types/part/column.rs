@@ -1,7 +1,7 @@
-use crate::sql::bean::dql::OrmQuery;
-use crate::sql::bean::func::OrmFunc;
-use crate::sql::bean::table::OrmSchemaTable;
-use crate::sql::bean::value::BValue;
+use crate::OrmValue;
+use crate::sql::types::query::OrmQuery;
+use crate::sql::types::{OrmFunc, OrmSchemaTable};
+
 
 pub enum OrmColumn {
     Simple(OrmSimpleColumn),
@@ -23,7 +23,7 @@ pub struct OrmQueryColumn {
     pub column: OrmQuery,
 }
 pub struct OrmValueColumn {
-    pub column: BValue,
+    pub column: OrmValue,
 }
 pub struct OrmRawColumn {
     pub column: String,
@@ -34,7 +34,7 @@ pub struct OrmFuncColumn {
 
 pub struct OrmDmlColumn {
     pub column: OrmColumn,
-    pub value: BValue,
+    pub value: OrmValue,
 }
 pub struct OrmSelectColumn {
     pub column: OrmColumn,
@@ -42,4 +42,13 @@ pub struct OrmSelectColumn {
 }
 pub struct QueryFilterColumn {
     pub column: OrmColumn,
+}
+
+pub struct OrmOrderColumn{
+    pub column: OrmColumn,
+    pub order_type : OrderType
+}
+pub enum OrderType {
+    Asc,
+    Desc
 }
