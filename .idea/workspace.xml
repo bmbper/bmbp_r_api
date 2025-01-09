@@ -7,9 +7,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04690401-1d74-43fa-a110-1b60541b5162" name="Changes" comment="orm 初始化">
-      <change afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/row.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/mod.rs" afterDir="false" />
+    <list default="true" id="04690401-1d74-43fa-a110-1b60541b5162" name="Changes" comment="orm Row">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/tree.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_app/src/core/abc/tree.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/record.rs" beforeDir="false" afterPath="$PROJECT_DIR$/crates/bmbp_orm/src/bean/record.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +101,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736360777593</updated>
-      <workItem from="1736360778668" duration="4896000" />
+      <workItem from="1736360778668" duration="5704000" />
     </task>
     <task id="LOCAL-00001" summary="改为多模块项目">
       <option name="closed" value="true" />
@@ -118,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736365653020</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="orm Row">
+      <option name="closed" value="true" />
+      <created>1736365693218</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1736365693218</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +136,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="改为多模块项目" />
     <MESSAGE value="orm 初始化" />
-    <option name="LAST_COMMIT_MESSAGE" value="orm 初始化" />
+    <MESSAGE value="orm Row" />
+    <option name="LAST_COMMIT_MESSAGE" value="orm Row" />
   </component>
 </project>

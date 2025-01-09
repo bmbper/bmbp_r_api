@@ -10,7 +10,7 @@ pub struct BmbpDictService;
 impl BmbpDictService {
     pub(crate) async fn get_tree(dict_vo: BmbpConfigDict) -> BmbpResp<Vec<BmbpConfigDict>> {
         let dict_list = BmbpDictService::get_list(dict_vo).await?;
-        Ok(BmbpTreeUtil::build_tree::<BmbpConfigDict>(dict_list))
+        Ok(BmbpTreeUtil::build::<BmbpConfigDict>(dict_list))
     }
     pub(crate) async fn get_list(dict_vo: BmbpConfigDict) -> BmbpResp<Vec<BmbpConfigDict>> {
         info!("查询SQL:{}", BmbpConfigDict::select().as_str());
