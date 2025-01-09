@@ -2,8 +2,8 @@ use tracing_log::log::info;
 use crate::core::abc::{BmbpResp, BmbpTreeUtil};
 use crate::core::config::dict::bean::BmbpConfigDict;
 use crate::orm::{DB_POOL};
-use bmbp_orm::BmbpTable;
-use bmbp_orm::BmbpTableSQL;
+use bmbp_orm::OrmTableTrait;
+use bmbp_orm::OrmSimpleSQLTrait;
 
 pub struct BmbpDictService;
 

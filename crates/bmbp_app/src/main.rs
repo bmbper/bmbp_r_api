@@ -1,8 +1,8 @@
 use crate::orm::build_pool;
 use salvo::prelude::TcpListener;
 use salvo::{Listener, Router, Server};
+use salvo::__private::tracing;
 use tracing_log::log::info;
-use tracing_subscriber::util::SubscriberInitExt;
 
 mod apc;
 mod bpc;

@@ -1,5 +1,5 @@
 use crate::core::abc::BmbpTree;
-use bmbp_orm::{BmbpTable, BmbpTableSQL};
+use bmbp_orm::{OrmTableTrait, OrmSimpleSQLTrait};
 use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgRow;
 use sqlx::{Error, FromRow, Row};
@@ -51,7 +51,7 @@ impl BmbpTree<BmbpConfigDict> for BmbpConfigDict {
         self.dict_children = Some(children);
     }
 }
-impl BmbpTable for BmbpConfigDict {
+impl OrmTableTrait for BmbpConfigDict {
     fn table_name() -> String {
         "bmbp_config_dict".to_string()
     }
@@ -83,7 +83,7 @@ impl BmbpTable for BmbpConfigDict {
         "data_id".to_string()
     }
 }
-impl BmbpTableSQL<BmbpConfigDict> for BmbpConfigDict {
+impl OrmSimpleSQLTrait<BmbpConfigDict> for BmbpConfigDict {
     fn insert(&self) -> String {
         "".to_string()
     }
