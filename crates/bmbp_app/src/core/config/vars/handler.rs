@@ -1,5 +1,6 @@
 use salvo::{handler, Depot, Request, Response};
-use crate::core::abc::{BmbpResp, PageData, RespVo};
+use bmbp_orm::PageData;
+use crate::core::abc::{BmbpResp,  RespVo};
 use crate::core::config::vars::bean::BmbpConfigVars;
 
 #[handler]

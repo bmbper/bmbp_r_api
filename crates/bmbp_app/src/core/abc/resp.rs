@@ -35,14 +35,6 @@ impl<T> RespVo<T> {
     }
 }
 
-#[derive(Default, Debug, Serialize, Deserialize)]
-pub struct PageData<T> {
-    pub total: u64,
-    pub page_no: u64,
-    pub page_size: u64,
-    pub data: Option<Vec<T>>,
-}
-
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ComboVo<T> {
     pub code: String,

@@ -1,8 +1,8 @@
-use crate::core::abc::{BmbpResp, PageData, RespVo};
+use crate::core::abc::{BmbpResp,  PageVo, RespVo};
 use crate::core::config::dict::bean::BmbpConfigDict;
 use salvo::prelude::*;
+use bmbp_orm::PageData;
 use crate::core::config::dict::service::BmbpDictService;
-use crate::orm::DB_POOL;
 
 #[handler]
 pub async fn tree(
@@ -33,7 +33,12 @@ pub async fn page(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<PageData<BmbpConfigDict>>> {
-    Ok(RespVo::ok(PageData::default()))
+    let dict_vo = req
+        .parse_body::<PageVo<BmbpConfigDict>>()
+        .await
+        .unwrap_or(PageVo::default());
+    let dict_page = BmbpDictService::get_page(dict_vo).await?;
+    Ok(RespVo::ok(dict_page))
 }
 
 #[handler]
@@ -51,7 +56,12 @@ pub async fn info(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<Option<BmbpConfigDict>>> {
-    Ok(RespVo::ok(None))
+    let dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::get_info(&dict_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]

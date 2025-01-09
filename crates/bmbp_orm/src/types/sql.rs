@@ -66,8 +66,8 @@ where
     fn select_by_id() -> String {
         format!(
             "SELECT {} FROM  {} WHERE {} = $1 ",
-            T::table_name(),
             T::table_columns().join(","),
+            T::table_name(),
             T::table_primary_key()
         )
     }
