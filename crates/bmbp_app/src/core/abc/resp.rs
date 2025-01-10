@@ -36,10 +36,10 @@ impl<T> RespVo<T> {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
-pub struct ComboVo<T> {
+pub struct ComboVo {
     pub code: String,
     pub label: String,
-    pub children: Option<Vec<T>>,
+    pub children: Option<Vec<Self>>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]

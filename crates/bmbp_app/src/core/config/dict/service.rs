@@ -1,16 +1,16 @@
 use crate::core::abc::{
     now_date_time, simple_id, BatchVo, BmbpErr, BmbpErrorKind, BmbpResp, BmbpTree, BmbpTreeUtil,
-    PageVo, RespVo, DATA_DISABLE, DATA_ENABLE, DATA_FLAG, DATA_LEVEL, DATA_STATUS, TREE_PATH_SPLIT,
-    TREE_ROOT_CODE,
+    ComboVo, PageVo, RespVo, DATA_DISABLE, DATA_ENABLE, DATA_FLAG, DATA_LEVEL, DATA_STATUS,
+    TREE_PATH_SPLIT, TREE_ROOT_CODE,
 };
-use crate::core::config::dict::bean::BmbpConfigDict;
+use crate::core::config::dict::bean::{BmbpConfigDict, DictQueryVo};
 use crate::core::config::dict::handler::{insert, page};
 use crate::orm::DB_POOL;
 use bmbp_orm::OrmSimpleSQLTrait;
 use bmbp_orm::{OrmTableTrait, PageData};
-use serde_json::to_string;
 use sqlx::encode::IsNull::No;
 use sqlx::query::{Query, QueryAs};
+use std::collections::HashMap;
 use tracing_log::log::{debug, info};
 
 pub struct BmbpDictService;
@@ -84,6 +84,31 @@ impl BmbpDictService {
             .await?;
         return Ok(dict_vec);
     }
+    async fn get_list_by_parent_code(dict_code: &String) -> BmbpResp<Vec<BmbpConfigDict>> {
+        let mut select_one_sql = BmbpConfigDict::select();
+        select_one_sql = format!("{} WHERE DICT_PARENT_CODE = $1", select_one_sql);
+        debug!("查询SQL:{}", select_one_sql);
+        let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
+            sqlx::query_as(select_one_sql.as_str()).bind(dict_code);
+        let dict_data = select_one_sqlx.fetch_all(&*DB_POOL.get().unwrap()).await?;
+        Ok(dict_data)
+    }
+    async fn get_list_by_parent_code_path(
+        dict_code_path: &String,
+    ) -> BmbpResp<Vec<BmbpConfigDict>> {
+        let mut select_one_sql = BmbpConfigDict::select();
+        select_one_sql = format!(
+            "{} WHERE DICT_CODE_PATH LIKE CONCAT($1,'%') AND DICT_CODE_PATH != $2 ",
+            select_one_sql
+        );
+        debug!("查询SQL:{}", select_one_sql);
+        let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
+            sqlx::query_as(select_one_sql.as_str())
+                .bind(dict_code_path)
+                .bind(dict_code_path);
+        let dict_data = select_one_sqlx.fetch_all(&*DB_POOL.get().unwrap()).await?;
+        Ok(dict_data)
+    }
     pub(crate) async fn get_page(
         page_vo: &PageVo<BmbpConfigDict>,
     ) -> BmbpResp<PageData<BmbpConfigDict>> {
@@ -124,6 +149,17 @@ impl BmbpDictService {
         debug!("查询SQL:{}", select_one_sql);
         let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
             sqlx::query_as(select_one_sql.as_str()).bind(dict_id);
+        let dict_data = select_one_sqlx
+            .fetch_optional(&*DB_POOL.get().unwrap())
+            .await?;
+        Ok(dict_data)
+    }
+    pub(crate) async fn get_info_by_alias(dict_alias: &String) -> BmbpResp<Option<BmbpConfigDict>> {
+        let select_one_sql = BmbpConfigDict::select();
+        let select_one_sql = format!("{} WHERE DICT_ALIAS = $1", select_one_sql);
+        debug!("查询SQL:{}", select_one_sql);
+        let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
+            sqlx::query_as(select_one_sql.as_str()).bind(dict_alias);
         let dict_data = select_one_sqlx
             .fetch_optional(&*DB_POOL.get().unwrap())
             .await?;
@@ -490,7 +526,7 @@ impl BmbpDictService {
             return Err(BmbpErr::valid("指定的字典不存在".to_string()));
         }
 
-        let dict_vec = Self::get_children_by_code(&dict_vo.dict_code).await?;
+        let dict_vec = Self::get_list_by_parent_code(&dict_vo.dict_code).await?;
         if !dict_vec.is_empty() {
             return Err(BmbpErr::valid("请先删除子字典".to_string()));
         };
@@ -506,16 +542,6 @@ impl BmbpDictService {
         }
         tx.commit().await?;
         Ok(result?.rows_affected() as usize)
-    }
-
-    async fn get_children_by_code(dict_code: &String) -> BmbpResp<Vec<BmbpConfigDict>> {
-        let mut select_one_sql = BmbpConfigDict::select();
-        select_one_sql = format!("{} WHERE DICT_PARENT_CODE = $1", select_one_sql);
-        debug!("查询SQL:{}", select_one_sql);
-        let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
-            sqlx::query_as(select_one_sql.as_str()).bind(dict_code);
-        let dict_data = select_one_sqlx.fetch_all(&*DB_POOL.get().unwrap()).await?;
-        Ok(dict_data)
     }
 
     pub(crate) async fn batch_enable(batch_vo: &BatchVo<String>) -> BmbpResp<usize> {
@@ -603,7 +629,7 @@ impl BmbpDictService {
         let mut tx = DB_POOL.get().unwrap().begin().await?;
         for dict in dict_vec.iter() {
             let dict_code_path = dict.dict_code_path.clone();
-            let dict_vec = Self::get_children_by_code(&dict_code_path).await?;
+            let dict_vec = Self::get_list_by_parent_code(&dict_code_path).await?;
             if !dict_vec.is_empty() {
                 tx.rollback().await?;
                 return Err(BmbpErr::valid("请先删除子字典".to_string()));
@@ -617,5 +643,194 @@ impl BmbpDictService {
         }
         tx.commit().await?;
         Ok(rows_affected)
+    }
+    pub(crate) async fn update_parent(dict_vo: &mut BmbpConfigDict) -> BmbpResp<usize> {
+        if dict_vo.data_id.is_empty() {
+            return Err(BmbpErr::valid("请指定待变更的字典".to_string()));
+        }
+        if dict_vo.dict_parent_code.is_empty() {
+            return Err(BmbpErr::valid("请指定字典的父级".to_string()));
+        }
+        let dict_info = Self::get_info_by_id(&dict_vo.data_id).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        if dict_vo.dict_parent_code == dict_info.unwrap().dict_code {
+            return Err(BmbpErr::valid("字典的父级不能与自身相同".to_string()));
+        }
+        Self::update(dict_vo).await
+    }
+
+    pub(crate) async fn combo(dict_query_vo: &DictQueryVo) -> BmbpResp<Vec<ComboVo>> {
+        let dict_alias = dict_query_vo.dict_code.clone();
+        if dict_alias.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let dict_info = Self::get_info_by_alias(&dict_alias).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let dict_code = dict_info.unwrap().dict_code;
+        let dict_vec = Self::get_list_by_parent_code(&dict_code).await?;
+        let mut combo_vec = vec![];
+        for dict in dict_vec.iter() {
+            let combo_tmp = ComboVo {
+                code: dict.dict_value.clone(),
+                label: dict.dict_name.clone(),
+                children: None,
+            };
+            combo_vec.push(combo_tmp);
+        }
+        Ok(combo_vec)
+    }
+    pub(crate) async fn combos(
+        dict_query_vo: &DictQueryVo,
+    ) -> BmbpResp<HashMap<String, Vec<ComboVo>>> {
+        let dict_alias = dict_query_vo.dict_codes.clone();
+        if dict_alias.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let mut combo_map = HashMap::new();
+        for dict_alias in dict_alias.iter() {
+            let combo_query_vo = DictQueryVo {
+                dict_code: dict_alias.to_string(),
+                ..Default::default()
+            };
+            let combo_vec = Self::combo(&combo_query_vo).await?;
+            combo_map.insert(dict_alias.to_string(), combo_vec);
+        }
+        Ok(combo_map)
+    }
+
+    pub(crate) async fn combo_tree(dict_query_vo: &DictQueryVo) -> BmbpResp<Vec<ComboVo>> {
+        let dict_alias = dict_query_vo.dict_code.clone();
+        if dict_alias.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let dict_info = Self::get_info_by_alias(&dict_alias).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let dict_code = dict_info.unwrap().dict_code;
+        let dict_vec = Self::get_list_by_parent_code_path(&dict_code).await?;
+
+        let dict_vec_tree = BmbpTreeUtil::build::<BmbpConfigDict>(dict_vec);
+
+        let mut combo_vec = vec![];
+        for dict in dict_vec_tree.iter() {
+            let combo_tmp = Self::build_tree_combo(dict);
+            combo_vec.push(combo_tmp);
+        }
+        Ok(combo_vec)
+    }
+    pub(crate) async fn combos_tree(
+        dict_query_vo: &DictQueryVo,
+    ) -> BmbpResp<HashMap<String, Vec<ComboVo>>> {
+        let dict_alias = dict_query_vo.dict_codes.clone();
+        if dict_alias.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let mut combo_map = HashMap::new();
+        for dict_alias in dict_alias.iter() {
+            let combo_query_vo = DictQueryVo {
+                dict_code: dict_alias.to_string(),
+                ..Default::default()
+            };
+            let combo_vec = Self::combo_tree(&combo_query_vo).await?;
+            combo_map.insert(dict_alias.to_string(), combo_vec);
+        }
+        Ok(combo_map)
+    }
+    fn build_tree_combo(dict: &BmbpConfigDict) -> ComboVo {
+        let mut combo_tmp = ComboVo {
+            code: dict.dict_value.clone(),
+            label: dict.dict_name.clone(),
+            children: None,
+        };
+        if let Some(children) = &dict.dict_children {
+            let mut child_combo_vec = vec![];
+            for child in children.iter() {
+                let combo_tmp = Self::build_tree_combo(child);
+                child_combo_vec.push(combo_tmp);
+            }
+            combo_tmp.children = Some(child_combo_vec);
+        }
+        combo_tmp
+    }
+    pub(crate) async fn display_convert(
+        dict_query_vo: &DictQueryVo,
+    ) -> BmbpResp<HashMap<String, String>> {
+        if dict_query_vo.dict_code.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let dict_info = Self::get_info_by_alias(&dict_query_vo.dict_code).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let dict_code = dict_info.as_ref().unwrap().dict_code.to_string();
+        let dict_vec = Self::get_list_by_parent_code(&dict_code).await?;
+        let mut map = HashMap::new();
+        for dict in dict_vec.iter() {
+            map.insert(dict.dict_value.to_string(), dict.dict_name.to_string());
+        }
+        Ok(map)
+    }
+    pub(crate) async fn displays_convert(
+        dict_query_vo: &DictQueryVo,
+    ) -> BmbpResp<HashMap<String, HashMap<String, String>>> {
+        if dict_query_vo.dict_codes.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let mut map = HashMap::new();
+
+        for dict_alias in dict_query_vo.dict_codes.iter() {
+            let combo_map = Self::display_convert(dict_query_vo).await?;
+            map.insert(dict_alias.to_string(), combo_map);
+        }
+        Ok(map)
+    }
+    pub(crate) async fn display_convert_tree(
+        dict_query_vo: &DictQueryVo,
+    ) -> BmbpResp<HashMap<String, String>> {
+        if dict_query_vo.dict_code.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let dict_info = Self::get_info_by_alias(&dict_query_vo.dict_code).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let dict_code_path = dict_info.as_ref().unwrap().dict_code_path.to_string();
+        let dict_vec = Self::get_list_by_parent_code_path(&dict_code_path).await?;
+        let dict_vec_tree = BmbpTreeUtil::build::<BmbpConfigDict>(dict_vec);
+        let mut map = Self::build_tree_display_convert(dict_vec_tree.as_slice());
+        Ok(map)
+    }
+    pub(crate) async fn displays_convert_tree(
+        dict_query_vo: &DictQueryVo,
+    ) -> BmbpResp<HashMap<String, HashMap<String, String>>> {
+        if dict_query_vo.dict_codes.is_empty() {
+            return Err(BmbpErr::valid("请指定字典别名".to_string()));
+        }
+        let mut map = HashMap::new();
+
+        for dict_alias in dict_query_vo.dict_codes.iter() {
+            let combo_map = Self::display_convert_tree(dict_query_vo).await?;
+            map.insert(dict_alias.to_string(), combo_map);
+        }
+        Ok(map)
+    }
+    fn build_tree_display_convert(dict_slice: &[BmbpConfigDict]) -> HashMap<String, String> {
+        let mut display_map = HashMap::new();
+        for dict in dict_slice {
+            let key = dict.dict_value.to_string();
+            display_map.insert(key.clone(), dict.dict_name.to_string());
+            if let Some(children) = dict.dict_children.as_ref() {
+                let child_map = Self::build_tree_display_convert(children.as_slice());
+                for (k, v) in child_map {
+                    display_map.insert(format!("{}.{}", key, k), v);
+                }
+            }
+        }
+        display_map
     }
 }

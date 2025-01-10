@@ -1,5 +1,5 @@
 use crate::core::abc::BmbpTree;
-use bmbp_orm::{OrmTableTrait, OrmSimpleSQLTrait};
+use bmbp_orm::{OrmSimpleSQLTrait, OrmTableTrait};
 use serde::{Deserialize, Serialize};
 use sqlx::postgres::PgRow;
 use sqlx::{Error, FromRow, Row};
@@ -119,4 +119,12 @@ impl<'a> FromRow<'a, PgRow> for BmbpConfigDict {
             data_sign: row.try_get("data_sign")?,
         })
     }
+}
+
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+#[serde(default)]
+pub struct DictQueryVo {
+    pub(crate) dict_code: String,
+    pub(crate) dict_codes: Vec<String>,
 }

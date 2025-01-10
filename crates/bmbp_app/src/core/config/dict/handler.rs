@@ -1,8 +1,9 @@
-use crate::core::abc::{BatchVo, BmbpResp, PageVo, RespVo};
-use crate::core::config::dict::bean::BmbpConfigDict;
-use salvo::prelude::*;
-use bmbp_orm::PageData;
+use crate::core::abc::{BatchVo, BmbpResp, ComboVo, PageVo, RespVo};
+use crate::core::config::dict::bean::{BmbpConfigDict, DictQueryVo};
 use crate::core::config::dict::service::BmbpDictService;
+use bmbp_orm::PageData;
+use salvo::prelude::*;
+use std::collections::HashMap;
 
 #[handler]
 pub async fn tree(
@@ -52,7 +53,10 @@ pub async fn list(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<Vec<BmbpConfigDict>>> {
-    let dict_vo = req.parse_body::<BmbpConfigDict>().await.unwrap_or(BmbpConfigDict::default());
+    let dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
     let dict_list = BmbpDictService::get_list(&dict_vo).await?;
     Ok(RespVo::ok(dict_list))
 }
@@ -199,7 +203,12 @@ pub async fn update_parent(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::update_parent(&mut dict_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -207,8 +216,13 @@ pub async fn combo(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<Vec<ComboVo>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::combo(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -216,8 +230,13 @@ pub async fn combos(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<HashMap<String, Vec<ComboVo>>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::combos(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -225,24 +244,39 @@ pub async fn combo_tree(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<Vec<ComboVo>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::combo_tree(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 #[handler]
 pub async fn combos_tree(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<HashMap<String, Vec<ComboVo>>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::combos_tree(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 #[handler]
 pub async fn display(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<HashMap<String, String>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::display_convert(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -250,22 +284,37 @@ pub async fn displays(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<HashMap<String, HashMap<String, String>>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::displays_convert(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 #[handler]
 pub async fn display_tree(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<HashMap<String, String>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::display_convert_tree(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 #[handler]
 pub async fn displays_tree(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+) -> BmbpResp<RespVo<HashMap<String, HashMap<String, String>>>> {
+    let dict_query_vo = req
+        .parse_body::<DictQueryVo>()
+        .await
+        .unwrap_or(DictQueryVo::default());
+    let dict_info = BmbpDictService::displays_convert_tree(&dict_query_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
