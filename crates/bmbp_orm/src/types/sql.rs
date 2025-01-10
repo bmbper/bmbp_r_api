@@ -30,14 +30,14 @@ where
         let mut insert_columns = vec![];
         let mut insert_values = vec![];
         for (index, col_name) in T::table_columns().iter().enumerate() {
-            insert_columns.push(format!("{},", col_name));
-            insert_values.push(format!("${},", index + 1));
+            insert_columns.push(format!("{}", col_name));
+            insert_values.push(format!("${}", index + 1));
         }
         insert_sql = format!(
             "INSERT INTO {} ({}) VALUES ({})",
             T::table_name(),
-            insert_columns.join(""),
-            insert_values.join("")
+            insert_columns.join(","),
+            insert_values.join(",")
         );
         return insert_sql;
     }

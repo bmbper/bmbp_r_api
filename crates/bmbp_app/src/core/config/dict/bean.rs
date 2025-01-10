@@ -16,6 +16,7 @@ pub struct BmbpConfigDict {
     pub dict_children: Option<Vec<BmbpConfigDict>>,
     pub dict_alias: String,
     pub dict_value: String,
+    pub dict_tree_grade: i64,
     pub data_id: String,
     pub data_flag: String,
     pub data_level: String,
@@ -65,6 +66,7 @@ impl OrmTableTrait for BmbpConfigDict {
             "dict_name_path".to_string(),
             "dict_alias".to_string(),
             "dict_value".to_string(),
+            "dict_tree_grade".to_string(),
             "data_id".to_string(),
             "data_flag".to_string(),
             "data_level".to_string(),
@@ -103,6 +105,7 @@ impl<'a> FromRow<'a, PgRow> for BmbpConfigDict {
             dict_children: None, // 忽略这一列
             dict_alias: row.try_get("dict_alias")?,
             dict_value: row.try_get("dict_value")?,
+            dict_tree_grade: row.try_get("dict_tree_grade")?,
             data_id: row.try_get("data_id")?,
             data_flag: row.try_get("data_flag")?,
             data_level: row.try_get("data_level")?,

@@ -14,7 +14,7 @@ pub async fn tree(
         .parse_body::<BmbpConfigDict>()
         .await
         .unwrap_or(BmbpConfigDict::default());
-    let dict_tree = BmbpDictService::get_tree(dict_vo).await?;
+    let dict_tree = BmbpDictService::get_tree(&dict_vo).await?;
     Ok(RespVo::ok(dict_tree))
 }
 
@@ -37,7 +37,7 @@ pub async fn page(
         .parse_body::<PageVo<BmbpConfigDict>>()
         .await
         .unwrap_or(PageVo::default());
-    let dict_page = BmbpDictService::get_page(dict_vo).await?;
+    let dict_page = BmbpDictService::get_page(&dict_vo).await?;
     Ok(RespVo::ok(dict_page))
 }
 
@@ -47,7 +47,9 @@ pub async fn list(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<Vec<BmbpConfigDict>>> {
-    Ok(RespVo::ok(vec![]))
+    let dict_vo = req.parse_body::<BmbpConfigDict>().await.unwrap_or(BmbpConfigDict::default());
+    let dict_list = BmbpDictService::get_list(&dict_vo).await?;
+    Ok(RespVo::ok(dict_list))
 }
 
 #[handler]
@@ -70,7 +72,12 @@ pub async fn save(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<Option<BmbpConfigDict>>> {
-    Ok(RespVo::ok(None))
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::save(&mut dict_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -78,16 +85,26 @@ pub async fn insert(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<Option<BmbpConfigDict>>> {
-    Ok(RespVo::ok(None))
+) -> BmbpResp<RespVo<Option<String>>> {
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let _ = BmbpDictService::insert(&mut dict_vo).await?;
+    Ok(RespVo::ok(Some(dict_vo.data_id.to_string())))
 }
 #[handler]
 pub async fn update(
     req: &mut Request,
     depot: &mut Depot,
     rep: &mut Response,
-) -> BmbpResp<RespVo<Option<BmbpConfigDict>>> {
-    Ok(RespVo::ok(None))
+) -> BmbpResp<RespVo<Option<usize>>> {
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::update(&mut dict_vo).await?;
+    Ok(RespVo::ok(Some(dict_info)))
 }
 
 #[handler]
