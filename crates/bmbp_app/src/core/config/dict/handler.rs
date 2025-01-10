@@ -8,8 +8,8 @@ use std::collections::HashMap;
 #[handler]
 pub async fn tree(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Vec<BmbpConfigDict>>> {
     let dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -22,8 +22,8 @@ pub async fn tree(
 #[handler]
 pub async fn tree_ignore_node(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Vec<BmbpConfigDict>>> {
     let dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -36,8 +36,8 @@ pub async fn tree_ignore_node(
 #[handler]
 pub async fn page(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<PageData<BmbpConfigDict>>> {
     let dict_vo = req
         .parse_body::<PageVo<BmbpConfigDict>>()
@@ -50,8 +50,8 @@ pub async fn page(
 #[handler]
 pub async fn list(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Vec<BmbpConfigDict>>> {
     let dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -64,8 +64,8 @@ pub async fn list(
 #[handler]
 pub async fn info(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Option<BmbpConfigDict>>> {
     let dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -78,8 +78,8 @@ pub async fn info(
 #[handler]
 pub async fn save(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Option<BmbpConfigDict>>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -92,8 +92,8 @@ pub async fn save(
 #[handler]
 pub async fn insert(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Option<String>>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -105,8 +105,8 @@ pub async fn insert(
 #[handler]
 pub async fn update(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Option<usize>>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -119,8 +119,8 @@ pub async fn update(
 #[handler]
 pub async fn enable(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -132,8 +132,8 @@ pub async fn enable(
 #[handler]
 pub async fn disable(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -146,8 +146,8 @@ pub async fn disable(
 #[handler]
 pub async fn delete(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -160,8 +160,8 @@ pub async fn delete(
 #[handler]
 pub async fn batch_enable(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let batch_vo = req
         .parse_body::<BatchVo<String>>()
@@ -173,8 +173,8 @@ pub async fn batch_enable(
 #[handler]
 pub async fn batch_disable(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let batch_vo = req
         .parse_body::<BatchVo<String>>()
@@ -186,8 +186,8 @@ pub async fn batch_disable(
 #[handler]
 pub async fn batch_delete(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let batch_vo = req
         .parse_body::<BatchVo<String>>()
@@ -200,8 +200,8 @@ pub async fn batch_delete(
 #[handler]
 pub async fn update_parent(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
     let mut dict_vo = req
         .parse_body::<BmbpConfigDict>()
@@ -214,8 +214,8 @@ pub async fn update_parent(
 #[handler]
 pub async fn combo(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Vec<ComboVo>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -228,8 +228,8 @@ pub async fn combo(
 #[handler]
 pub async fn combos(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<HashMap<String, Vec<ComboVo>>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -242,8 +242,8 @@ pub async fn combos(
 #[handler]
 pub async fn combo_tree(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<Vec<ComboVo>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -255,8 +255,8 @@ pub async fn combo_tree(
 #[handler]
 pub async fn combos_tree(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<HashMap<String, Vec<ComboVo>>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -268,8 +268,8 @@ pub async fn combos_tree(
 #[handler]
 pub async fn display(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<HashMap<String, String>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -282,8 +282,8 @@ pub async fn display(
 #[handler]
 pub async fn displays(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<HashMap<String, HashMap<String, String>>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -295,8 +295,8 @@ pub async fn displays(
 #[handler]
 pub async fn display_tree(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<HashMap<String, String>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
@@ -308,8 +308,8 @@ pub async fn display_tree(
 #[handler]
 pub async fn displays_tree(
     req: &mut Request,
-    depot: &mut Depot,
-    rep: &mut Response,
+    _depot: &mut Depot,
+    _resp: &mut Response,
 ) -> BmbpResp<RespVo<HashMap<String, HashMap<String, String>>>> {
     let dict_query_vo = req
         .parse_body::<DictQueryVo>()
