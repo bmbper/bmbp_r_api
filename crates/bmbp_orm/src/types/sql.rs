@@ -45,7 +45,7 @@ where
         let mut insert_sql = "".to_string();
         let mut set_columns = vec![];
         for (index, col_name) in T::table_columns().iter().enumerate() {
-            set_columns.push(format!("{} = ${},", col_name, index + 1));
+            set_columns.push(format!("{} = ${}", col_name, index + 1));
         }
         insert_sql = format!(
             "UPDATE  {} SET {} WHERE {} = ${} ",

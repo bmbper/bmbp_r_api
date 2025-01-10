@@ -1,12 +1,13 @@
 use crate::core::abc::{
-    now_date_time, simple_id, BmbpErr, BmbpErrorKind, BmbpResp, BmbpTreeUtil, PageVo, RespVo,
-    DATA_FLAG, DATA_LEVEL, DATA_STATUS, TREE_PATH_SPLIT, TREE_ROOT_CODE,
+    now_date_time, simple_id, BmbpErr, BmbpErrorKind, BmbpResp, BmbpTree, BmbpTreeUtil, PageVo,
+    RespVo, DATA_FLAG, DATA_LEVEL, DATA_STATUS, TREE_PATH_SPLIT, TREE_ROOT_CODE,
 };
 use crate::core::config::dict::bean::BmbpConfigDict;
 use crate::core::config::dict::handler::{insert, page};
 use crate::orm::DB_POOL;
 use bmbp_orm::OrmSimpleSQLTrait;
 use bmbp_orm::{OrmTableTrait, PageData};
+use serde_json::to_string;
 use sqlx::encode::IsNull::No;
 use sqlx::query::{Query, QueryAs};
 use tracing_log::log::{debug, info};
@@ -116,7 +117,7 @@ impl BmbpDictService {
             return Err(BmbpErr::valid("字典值不能为空".to_string()));
         }
 
-        if dict.dict_parent_code.is_empty() {
+        if dict.dict_parent_code.is_empty()  ||  dict.dict_parent_code.as_str() == TREE_ROOT_CODE {
             dict.dict_parent_code = TREE_ROOT_CODE.to_string();
             dict.dict_code_path = format!(
                 "{}{}{}{}",
@@ -188,7 +189,114 @@ impl BmbpDictService {
         if dict.data_id.is_empty() {
             return Err(BmbpErr::valid("字典ID不能为空".to_string()));
         }
-        Ok(0)
+        let old_dict = Self::get_info(dict).await?;
+        if old_dict.is_none() {
+            return Err(BmbpErr::valid("待更新的字典不存在".to_string()));
+        }
+        let mut old_dict = old_dict.unwrap();
+        let old_dict_code_path = old_dict.dict_code_path.clone();
+        let old_dict_name_path = old_dict.dict_name_path.clone();
+
+        if dict.dict_name.is_empty() {
+            dict.dict_name = old_dict.dict_name.clone();
+        }
+        if dict.dict_alias.is_empty() {
+            dict.dict_alias = old_dict.dict_alias.clone();
+        }
+        if dict.dict_value.is_empty() {
+            dict.dict_value = old_dict.dict_value.clone();
+        }
+        if dict.dict_code.is_empty() {
+            dict.dict_code = old_dict.dict_code.clone();
+        }
+        if dict.dict_parent_code.is_empty() || dict.dict_parent_code.as_str() == TREE_ROOT_CODE{
+            dict.dict_code = old_dict.dict_code.clone();
+            dict.dict_parent_code = TREE_ROOT_CODE.to_string();
+            dict.dict_code_path = format!(
+                "{}{}{}{}",
+                TREE_ROOT_CODE, TREE_PATH_SPLIT, dict.dict_code, TREE_PATH_SPLIT
+            );
+            dict.dict_name_path = format!(
+                "{}{}{}{}",
+                TREE_ROOT_CODE, TREE_PATH_SPLIT, dict.dict_name, TREE_PATH_SPLIT
+            );
+        } else {
+            let parent_dict = Self::get_info_by_code(dict.dict_parent_code.clone()).await?;
+            if parent_dict.is_none() {
+                return Err(BmbpErr::valid("父级字典不存在".to_string()));
+            }
+            let parent_dict = parent_dict.unwrap();
+            dict.dict_code_path = format!(
+                "{}{}{}",
+                parent_dict.dict_code_path, dict.dict_code, TREE_PATH_SPLIT
+            );
+            dict.dict_name_path = format!(
+                "{}{}{}",
+                parent_dict.dict_name_path, dict.dict_name, TREE_PATH_SPLIT
+            );
+        }
+
+        // check same name
+        Self::check_same_name(&dict.dict_name, &dict.dict_parent_code, &dict.data_id).await?;
+        // check same value
+        Self::check_same_value(&dict.dict_value, &dict.dict_parent_code, &dict.data_id).await?;
+        // check same alias
+        Self::check_same_alias(&dict.dict_alias, &dict.data_id).await?;
+
+        // set default value
+        dict.data_flag = old_dict.data_flag.clone();
+        dict.data_level = old_dict.data_level.to_string();
+        dict.data_status = old_dict.data_status.to_string();
+        dict.data_create_time = old_dict.data_create_time.clone();
+        dict.data_update_time = now_date_time();
+        dict.data_create_user = "".to_string();
+        dict.data_update_user = "".to_string();
+        dict.data_owner_org = "".to_string();
+        dict.data_sign = "".to_string();
+        dict.dict_tree_grade = (dict.dict_code_path.split(TREE_PATH_SPLIT).count() as i64) - 2;
+
+        let new_code_path = dict.dict_code_path.clone();
+        let new_name_path = dict.dict_name_path.clone();
+
+        // 开始事务
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        // 更新当前记当
+        let mut update_sql = BmbpConfigDict::update_all();
+        let update_query = sqlx::query(update_sql.as_str())
+            .bind(&dict.dict_code)
+            .bind(&dict.dict_parent_code)
+            .bind(&dict.dict_code_path)
+            .bind(&dict.dict_name)
+            .bind(&dict.dict_name_path)
+            .bind(&dict.dict_alias)
+            .bind(&dict.dict_value)
+            .bind(&dict.dict_tree_grade)
+            .bind(&dict.data_id)
+            .bind(&dict.data_flag)
+            .bind(&dict.data_level)
+            .bind(&dict.data_status)
+            .bind(&dict.data_order)
+            .bind(&dict.data_create_time)
+            .bind(&dict.data_update_time)
+            .bind(&dict.data_create_user)
+            .bind(&dict.data_update_user)
+            .bind(&dict.data_owner_org)
+            .bind(&dict.data_sign)
+            .bind(&dict.data_id);
+        update_query.execute(&mut *tx).await?;
+
+        // 更新子级
+        let mut update_child_sql =format!(" UPDATE {} SET DICT_CODE_PATH = REPLACE(DICT_CODE_PATH, $1, $2), DICT_NAME_PATH = REPLACE(DICT_NAME_PATH, $3, $4) WHERE DICT_CODE_PATH LIKE CONCAT($5,'%')",  BmbpConfigDict::table_name());
+        let update_child_query = sqlx::query(update_child_sql.as_str())
+            .bind(&old_dict_code_path)
+            .bind(&new_code_path)
+            .bind(&old_dict_name_path)
+            .bind(&new_name_path)
+            .bind(&old_dict_code_path);
+        update_child_query.execute(&mut *tx).await?;
+
+        tx.commit().await?;
+        Ok(0usize)
     }
 
     async fn check_same_name(
