@@ -1,4 +1,4 @@
-use crate::core::abc::{BmbpResp,  PageVo, RespVo};
+use crate::core::abc::{BatchVo, BmbpResp, PageVo, RespVo};
 use crate::core::config::dict::bean::BmbpConfigDict;
 use salvo::prelude::*;
 use bmbp_orm::PageData;
@@ -24,7 +24,12 @@ pub async fn tree_ignore_node(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<Vec<BmbpConfigDict>>> {
-    Ok(RespVo::ok(vec![]))
+    let dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_tree = BmbpDictService::get_tree_ignore_node(&dict_vo).await?;
+    Ok(RespVo::ok(dict_tree))
 }
 
 #[handler]
@@ -113,7 +118,12 @@ pub async fn enable(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::enable(&mut dict_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 #[handler]
 pub async fn disable(
@@ -121,7 +131,12 @@ pub async fn disable(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::disable(&mut dict_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -130,7 +145,12 @@ pub async fn delete(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let mut dict_vo = req
+        .parse_body::<BmbpConfigDict>()
+        .await
+        .unwrap_or(BmbpConfigDict::default());
+    let dict_info = BmbpDictService::delete(&mut dict_vo).await?;
+    Ok(RespVo::ok(dict_info))
 }
 
 #[handler]
@@ -139,7 +159,12 @@ pub async fn batch_enable(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let batch_vo = req
+        .parse_body::<BatchVo<String>>()
+        .await
+        .unwrap_or(BatchVo::default());
+    let row_count = BmbpDictService::batch_enable(&batch_vo).await?;
+    Ok(RespVo::ok(row_count))
 }
 #[handler]
 pub async fn batch_disable(
@@ -147,7 +172,12 @@ pub async fn batch_disable(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let batch_vo = req
+        .parse_body::<BatchVo<String>>()
+        .await
+        .unwrap_or(BatchVo::default());
+    let row_count = BmbpDictService::batch_disable(&batch_vo).await?;
+    Ok(RespVo::ok(row_count))
 }
 #[handler]
 pub async fn batch_delete(
@@ -155,7 +185,12 @@ pub async fn batch_delete(
     depot: &mut Depot,
     rep: &mut Response,
 ) -> BmbpResp<RespVo<usize>> {
-    Ok(RespVo::ok(0usize))
+    let batch_vo = req
+        .parse_body::<BatchVo<String>>()
+        .await
+        .unwrap_or(BatchVo::default());
+    let row_count = BmbpDictService::batch_delete(&batch_vo).await?;
+    Ok(RespVo::ok(row_count))
 }
 
 #[handler]

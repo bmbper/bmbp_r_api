@@ -1,6 +1,7 @@
 use crate::core::abc::{
-    now_date_time, simple_id, BmbpErr, BmbpErrorKind, BmbpResp, BmbpTree, BmbpTreeUtil, PageVo,
-    RespVo, DATA_FLAG, DATA_LEVEL, DATA_STATUS, TREE_PATH_SPLIT, TREE_ROOT_CODE,
+    now_date_time, simple_id, BatchVo, BmbpErr, BmbpErrorKind, BmbpResp, BmbpTree, BmbpTreeUtil,
+    PageVo, RespVo, DATA_DISABLE, DATA_ENABLE, DATA_FLAG, DATA_LEVEL, DATA_STATUS, TREE_PATH_SPLIT,
+    TREE_ROOT_CODE,
 };
 use crate::core::config::dict::bean::BmbpConfigDict;
 use crate::core::config::dict::handler::{insert, page};
@@ -19,14 +20,65 @@ impl BmbpDictService {
         let dict_list = BmbpDictService::get_list(&dict_vo).await?;
         Ok(BmbpTreeUtil::build::<BmbpConfigDict>(dict_list))
     }
-    pub(crate) async fn get_list(dict_vo: &BmbpConfigDict) -> BmbpResp<Vec<BmbpConfigDict>> {
+    pub(crate) async fn get_tree_ignore_node(
+        dict_vo: &BmbpConfigDict,
+    ) -> BmbpResp<Vec<BmbpConfigDict>> {
         let mut query_list_sql = BmbpConfigDict::select();
+        let mut dict_code_path = {
+            if !dict_vo.data_id.is_empty() {
+                if let Some(old_dict) = Self::get_info(dict_vo).await? {
+                    old_dict.dict_code_path.clone()
+                } else {
+                    "".to_string()
+                }
+            } else if !dict_vo.dict_code.is_empty() {
+                if let Some(old_dict) = Self::get_info_by_code(dict_vo.dict_code.clone()).await? {
+                    old_dict.dict_code_path.clone()
+                } else {
+                    "".to_string()
+                }
+            } else {
+                "".to_string()
+            }
+        };
         query_list_sql = format!(
-            "{} ORDER BY DICT_PARENT_CODE ASC,DICT_ORDER ASC",
+            "{} WHERE DICT_CODE_PATH NOT LIKE CONCAT($1,'%')",
+            query_list_sql
+        );
+
+        query_list_sql = format!(
+            "{} ORDER BY DICT_PARENT_CODE ASC,DATA_ORDER ASC",
             query_list_sql
         );
         debug!("查询SQL:{}", query_list_sql);
 
+        let dict_vec = sqlx::query_as(query_list_sql.as_str())
+            .bind(dict_code_path)
+            .fetch_all(DB_POOL.get().unwrap())
+            .await?;
+        Ok(BmbpTreeUtil::build::<BmbpConfigDict>(dict_vec))
+    }
+    pub(crate) async fn get_list(dict_vo: &BmbpConfigDict) -> BmbpResp<Vec<BmbpConfigDict>> {
+        let mut query_list_sql = BmbpConfigDict::select();
+        query_list_sql = format!(
+            "{} ORDER BY DICT_PARENT_CODE ASC,DATA_ORDER ASC",
+            query_list_sql
+        );
+        debug!("查询SQL:{}", query_list_sql);
+
+        let dict_vec = sqlx::query_as(query_list_sql.as_str())
+            .fetch_all(DB_POOL.get().unwrap())
+            .await?;
+        return Ok(dict_vec);
+    }
+    pub(crate) async fn get_list_by_ids(dict_id_vec: &[String]) -> BmbpResp<Vec<BmbpConfigDict>> {
+        let mut query_list_sql = BmbpConfigDict::select();
+        // 构建 IN 子句的占位符
+        let placeholders: Vec<String> =
+            (1..=dict_id_vec.len()).map(|i| format!("${}", i)).collect();
+        let in_clause = placeholders.join(",");
+        // 构建 SQL 语句
+        query_list_sql = format!("{} WHERE DATA_ID IN ({})", query_list_sql, in_clause);
         let dict_vec = sqlx::query_as(query_list_sql.as_str())
             .fetch_all(DB_POOL.get().unwrap())
             .await?;
@@ -64,17 +116,19 @@ impl BmbpDictService {
         Ok(page_data)
     }
     pub(crate) async fn get_info(dict_vo: &BmbpConfigDict) -> BmbpResp<Option<BmbpConfigDict>> {
-        let dict_data_id = dict_vo.data_id.clone();
+        Self::get_info_by_id(&dict_vo.data_id).await
+    }
+
+    pub(crate) async fn get_info_by_id(dict_id: &String) -> BmbpResp<Option<BmbpConfigDict>> {
         let select_one_sql = BmbpConfigDict::select_by_id();
         debug!("查询SQL:{}", select_one_sql);
         let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
-            sqlx::query_as(select_one_sql.as_str()).bind(dict_data_id);
+            sqlx::query_as(select_one_sql.as_str()).bind(dict_id);
         let dict_data = select_one_sqlx
             .fetch_optional(&*DB_POOL.get().unwrap())
             .await?;
         Ok(dict_data)
     }
-
     pub(crate) async fn get_info_by_code(dict_code: String) -> BmbpResp<Option<BmbpConfigDict>> {
         if dict_code.is_empty() {
             return Err(BmbpErr::valid("字典编码不能为空".to_string()));
@@ -117,7 +171,7 @@ impl BmbpDictService {
             return Err(BmbpErr::valid("字典值不能为空".to_string()));
         }
 
-        if dict.dict_parent_code.is_empty()  ||  dict.dict_parent_code.as_str() == TREE_ROOT_CODE {
+        if dict.dict_parent_code.is_empty() || dict.dict_parent_code.as_str() == TREE_ROOT_CODE {
             dict.dict_parent_code = TREE_ROOT_CODE.to_string();
             dict.dict_code_path = format!(
                 "{}{}{}{}",
@@ -209,7 +263,7 @@ impl BmbpDictService {
         if dict.dict_code.is_empty() {
             dict.dict_code = old_dict.dict_code.clone();
         }
-        if dict.dict_parent_code.is_empty() || dict.dict_parent_code.as_str() == TREE_ROOT_CODE{
+        if dict.dict_parent_code.is_empty() || dict.dict_parent_code.as_str() == TREE_ROOT_CODE {
             dict.dict_code = old_dict.dict_code.clone();
             dict.dict_parent_code = TREE_ROOT_CODE.to_string();
             dict.dict_code_path = format!(
@@ -364,5 +418,204 @@ impl BmbpDictService {
             return Err(BmbpErr::valid("字典别名重复".to_string()));
         }
         Ok(())
+    }
+    pub(crate) async fn enable(dict_vo: &mut BmbpConfigDict) -> BmbpResp<usize> {
+        if dict_vo.data_id.is_empty() {
+            return Err(BmbpErr::valid("请指定待启用的字典".to_string()));
+        }
+        let dict_info = Self::get_info_by_id(&dict_vo.data_id).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let dict_code_path = dict_info.as_ref().unwrap().dict_code_path.clone();
+        let dict_code_vec = dict_code_path.split(TREE_PATH_SPLIT).collect::<Vec<_>>();
+        // 构建 IN 子句的占位符
+        let placeholders: Vec<String> = (1..=dict_code_vec.len())
+            .map(|i| format!("${}", i))
+            .collect();
+        let in_clause = placeholders.join(",");
+        // 构建 SQL 语句
+        let update_sql = format!(
+            "UPDATE {} SET DATA_STATUS = ${} WHERE dict_code IN ({})",
+            BmbpConfigDict::table_name(),
+            dict_code_vec.len() + 1, // new_status 是第一个参数
+            in_clause
+        );
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        let mut update_query = sqlx::query(&update_sql).bind(DATA_ENABLE);
+        for code in dict_code_vec.iter() {
+            update_query = update_query.bind(code);
+        }
+        let result = update_query.execute(&mut *tx).await;
+        if result.is_err() {
+            tx.rollback().await?;
+            return Err(BmbpErr::valid("启用字典失败".to_string()));
+        }
+        tx.commit().await?;
+        Ok(result?.rows_affected() as usize)
+    }
+    pub(crate) async fn disable(dict_vo: &mut BmbpConfigDict) -> BmbpResp<usize> {
+        if dict_vo.data_id.is_empty() {
+            return Err(BmbpErr::valid("请指定待启用的字典".to_string()));
+        }
+        let dict_info = Self::get_info_by_id(&dict_vo.data_id).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let dict_code_path = dict_info.as_ref().unwrap().dict_code_path.clone();
+        // 构建 SQL 语句
+        let update_sql = format!(
+            "UPDATE {} SET DATA_STATUS = $1 WHERE DICT_CODE_PATH LIKE CONCAT($2,'%')",
+            BmbpConfigDict::table_name()
+        );
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        let mut update_query = sqlx::query(&update_sql)
+            .bind(DATA_ENABLE)
+            .bind(dict_code_path);
+        let result = update_query.execute(&mut *tx).await;
+        if result.is_err() {
+            tx.rollback().await?;
+            return Err(BmbpErr::valid("禁用字典失败".to_string()));
+        }
+        tx.commit().await?;
+        Ok(result?.rows_affected() as usize)
+    }
+
+    pub(crate) async fn delete(dict_vo: &mut BmbpConfigDict) -> BmbpResp<usize> {
+        if dict_vo.data_id.is_empty() {
+            return Err(BmbpErr::valid("请指定待删除的字典".to_string()));
+        }
+        let dict_info = Self::get_info_by_id(&dict_vo.data_id).await?;
+        if dict_info.is_none() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+
+        let dict_vec = Self::get_children_by_code(&dict_vo.dict_code).await?;
+        if !dict_vec.is_empty() {
+            return Err(BmbpErr::valid("请先删除子字典".to_string()));
+        };
+        let delete_sql = BmbpConfigDict::delete_by_id();
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        let result = sqlx::query(&delete_sql)
+            .bind(&dict_vo.data_id)
+            .execute(&mut *tx)
+            .await;
+        if result.is_err() {
+            tx.rollback().await?;
+            return Err(BmbpErr::valid("删除字典失败".to_string()));
+        }
+        tx.commit().await?;
+        Ok(result?.rows_affected() as usize)
+    }
+
+    async fn get_children_by_code(dict_code: &String) -> BmbpResp<Vec<BmbpConfigDict>> {
+        let mut select_one_sql = BmbpConfigDict::select();
+        select_one_sql = format!("{} WHERE DICT_PARENT_CODE = $1", select_one_sql);
+        debug!("查询SQL:{}", select_one_sql);
+        let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
+            sqlx::query_as(select_one_sql.as_str()).bind(dict_code);
+        let dict_data = select_one_sqlx.fetch_all(&*DB_POOL.get().unwrap()).await?;
+        Ok(dict_data)
+    }
+
+    pub(crate) async fn batch_enable(batch_vo: &BatchVo<String>) -> BmbpResp<usize> {
+        let data_id_vec = batch_vo.batch_vo.as_slice();
+        if data_id_vec.is_empty() {
+            return Err(BmbpErr::valid("请指定待启用的字典".to_string()));
+        }
+        let dict_vec = Self::get_list_by_ids(data_id_vec).await?;
+        if dict_vec.is_empty() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let mut rows_affected = 0;
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        for dict in dict_vec.iter() {
+            let dict_code_path = dict.dict_code_path.clone();
+            let dict_code_vec = dict_code_path.split(TREE_PATH_SPLIT).collect::<Vec<_>>();
+            // 构建 IN 子句的占位符
+            let placeholders: Vec<String> = (1..=dict_code_vec.len())
+                .map(|i| format!("${}", i))
+                .collect();
+            let in_clause = placeholders.join(",");
+            // 构建 SQL 语句
+            let update_sql = format!(
+                "UPDATE {} SET DATA_STATUS = ${} WHERE dict_code IN ({})",
+                BmbpConfigDict::table_name(),
+                dict_code_vec.len() + 1, // new_status 是第一个参数
+                in_clause
+            );
+
+            let mut update_query = sqlx::query(&update_sql).bind(DATA_ENABLE);
+            for code in dict_code_vec.iter() {
+                update_query = update_query.bind(code);
+            }
+            let result = update_query.execute(&mut *tx).await;
+            if result.is_err() {
+                tx.rollback().await?;
+                return Err(BmbpErr::valid("启用字典失败".to_string()));
+            }
+            rows_affected += result?.rows_affected() as usize;
+        }
+        tx.commit().await?;
+        Ok(rows_affected)
+    }
+    pub(crate) async fn batch_disable(batch_vo: &BatchVo<String>) -> BmbpResp<usize> {
+        let data_id_vec = batch_vo.batch_vo.as_slice();
+        if data_id_vec.is_empty() {
+            return Err(BmbpErr::valid("请指定待停用的字典".to_string()));
+        }
+        let dict_vec = Self::get_list_by_ids(data_id_vec).await?;
+        if dict_vec.is_empty() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let mut rows_affected = 0;
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        for dict in dict_vec.iter() {
+            let dict_code_path = dict.dict_code_path.clone();
+            // 构建 SQL 语句
+            let update_sql = format!(
+                "UPDATE {} SET DATA_STATUS = $1 WHERE DICT_CODE_PATH LIKE CONCAT($2,'%')",
+                BmbpConfigDict::table_name()
+            );
+            let mut update_query = sqlx::query(&update_sql)
+                .bind(DATA_DISABLE)
+                .bind(dict_code_path);
+            let result = update_query.execute(&mut *tx).await;
+            if result.is_err() {
+                tx.rollback().await?;
+                return Err(BmbpErr::valid("删除字典失败".to_string()));
+            }
+            rows_affected += result?.rows_affected() as usize;
+        }
+        tx.commit().await?;
+        Ok(rows_affected)
+    }
+    pub(crate) async fn batch_delete(batch_vo: &BatchVo<String>) -> BmbpResp<usize> {
+        let data_id_vec = batch_vo.batch_vo.as_slice();
+        if data_id_vec.is_empty() {
+            return Err(BmbpErr::valid("请指定待删除的字典".to_string()));
+        }
+        let dict_vec = Self::get_list_by_ids(data_id_vec).await?;
+        if dict_vec.is_empty() {
+            return Err(BmbpErr::valid("指定的字典不存在".to_string()));
+        }
+        let mut rows_affected = 0;
+        let mut tx = DB_POOL.get().unwrap().begin().await?;
+        for dict in dict_vec.iter() {
+            let dict_code_path = dict.dict_code_path.clone();
+            let dict_vec = Self::get_children_by_code(&dict_code_path).await?;
+            if !dict_vec.is_empty() {
+                tx.rollback().await?;
+                return Err(BmbpErr::valid("请先删除子字典".to_string()));
+            };
+            let delete_sql = BmbpConfigDict::delete_by_id();
+            let result = sqlx::query(&delete_sql)
+                .bind(&dict.data_id)
+                .execute(&mut *tx)
+                .await?;
+            rows_affected += result.rows_affected() as usize;
+        }
+        tx.commit().await?;
+        Ok(rows_affected)
     }
 }
