@@ -2,10 +2,10 @@ use sqlx::postgres::PgPoolOptions;
 use sqlx::{Connection, Error, Pool, Postgres};
 use tokio::sync::OnceCell;
 pub static DB_POOL: OnceCell<Pool<Postgres>> = OnceCell::const_new();
-pub(crate) async fn build_pool() -> Result<(), Error> {
+pub(crate) async fn build_pool(url:String,init_pool:u32) -> Result<(), Error> {
     match PgPoolOptions::new()
-        .max_connections(5)
-        .connect("postgres://bmbp:zgk0130!@127.0.0.1:5432/bmbp")
+        .max_connections(init_pool)
+        .connect(url.as_str())
         .await
     {
         Ok(pool) => {

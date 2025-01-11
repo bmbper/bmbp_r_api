@@ -1,0 +1,21 @@
+[app]
+code = "bmbp"
+name = "简逸后台管理系统"
+login_name = "简逸后台管理系统"
+nav_name = "简逸管理"
+copy_right = "CopyRight 2024"
+
+[server]
+host = "127.0.0.1"
+port = 36001
+env = "prod"
+log_level = "info"
+
+[datasource]
+driver = "postgres"
+host = "127.0.0.1"
+port = 5432
+username = "bmbp"
+password = "zgk0130!"
+database = "bmbp"
+init_size = 5
