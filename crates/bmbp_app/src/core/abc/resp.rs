@@ -4,6 +4,7 @@ use salvo::{async_trait, Depot, Request, Response, Writer};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct RespVo<T> {
     pub code: String,
     pub msg: String,
@@ -36,6 +37,7 @@ impl<T> RespVo<T> {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ComboVo {
     pub code: String,
     pub label: String,
@@ -43,6 +45,7 @@ pub struct ComboVo {
 }
 
 #[derive(Debug, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct CountVo<T> {
     pub code: String,
     pub label: String,

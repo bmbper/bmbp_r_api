@@ -79,7 +79,13 @@ impl BmbpDictService {
         let in_clause = placeholders.join(",");
         // 构建 SQL 语句
         query_list_sql = format!("{} WHERE DATA_ID IN ({})", query_list_sql, in_clause);
-        let dict_vec = sqlx::query_as(query_list_sql.as_str())
+        let mut  sqlx_query: QueryAs<_, BmbpConfigDict, _> =
+            sqlx::query_as(query_list_sql.as_str());
+        for dict_data_id in dict_id_vec {
+            sqlx_query = sqlx_query.bind(dict_data_id);
+        }
+
+        let dict_vec = sqlx_query
             .fetch_all(DB_POOL.get().unwrap())
             .await?;
         return Ok(dict_vec);
@@ -87,7 +93,6 @@ impl BmbpDictService {
     async fn get_list_by_parent_code(dict_code: &String) -> BmbpResp<Vec<BmbpConfigDict>> {
         let mut select_one_sql = BmbpConfigDict::select();
         select_one_sql = format!("{} WHERE DICT_PARENT_CODE = $1", select_one_sql);
-        debug!("查询SQL:{}", select_one_sql);
         let mut select_one_sqlx: QueryAs<_, BmbpConfigDict, _> =
             sqlx::query_as(select_one_sql.as_str()).bind(dict_code);
         let dict_data = select_one_sqlx.fetch_all(&*DB_POOL.get().unwrap()).await?;
@@ -112,16 +117,40 @@ impl BmbpDictService {
     pub(crate) async fn get_page(
         page_vo: &PageVo<BmbpConfigDict>,
     ) -> BmbpResp<PageData<BmbpConfigDict>> {
-        let mut page_no = page_vo.page_size.unwrap_or(1);
-        let mut page_size = page_vo.page_no.unwrap_or(10);
+        let mut page_no = page_vo.page_num.unwrap_or(1);
+        let mut page_size = page_vo.page_size.unwrap_or(10);
         page_no = if page_no == 0 { 1 } else { page_no };
         page_size = if page_size == 0 { 10 } else { page_size };
 
         let mut page_data: PageData<BmbpConfigDict> = PageData::default();
-        page_data.page_no = page_vo.page_no.unwrap_or(1);
+        page_data.page_num = page_vo.page_num.unwrap_or(1);
         page_data.page_size = page_vo.page_size.unwrap_or(10);
 
-        let query_sql = BmbpConfigDict::select();
+        let mut query_sql = BmbpConfigDict::select();
+        let mut condition_sql = vec![];
+        if let Some(dict_vo) = page_vo.params.as_ref() {
+            if !dict_vo.dict_code.is_empty() {
+                condition_sql.push(format!("DICT_CODE_PATH LIKE CONCAT('%/{}/%')",dict_vo.dict_code));
+            }
+            if !dict_vo.dict_code_path.is_empty() {
+                condition_sql.push(format!("DICT_CODE_PATH LIKE CONCAT('{}%')",dict_vo.dict_code_path));
+            }
+            if !dict_vo.dict_name.is_empty() {
+                condition_sql.push(format!("DICT_NAME LIKE CONCAT('%{}%')",dict_vo.dict_name));
+            }
+            if !dict_vo.dict_parent_code.is_empty() {
+                condition_sql.push(format!("DICT_CODE_PATH LIKE CONCAT('%{}%')",dict_vo.dict_parent_code));
+            }
+            if !dict_vo.dict_alias.is_empty() {
+                condition_sql.push(format!("DICT_ALIAS LIKE CONCAT('%{}%')",dict_vo.dict_alias));
+            }
+        }
+        if !condition_sql.is_empty() {
+            let condition_sql = condition_sql.join(" AND ");
+            query_sql = format!("{} WHERE {}", query_sql,condition_sql);
+        }
+        // 字段排序
+        query_sql = format!("{} ORDER BY DICT_TREE_GRADE ASC,DATA_ORDER ASC,DICT_PARENT_CODE ASC", query_sql);
         // 计算总数
         let count_sql = format!("SELECT COUNT(*) as COUNT FROM ({}) AS t", query_sql);
         debug!("分页查询-COUNT SQL:{}", BmbpConfigDict::select().as_str());
@@ -499,6 +528,7 @@ impl BmbpDictService {
             return Err(BmbpErr::valid("指定的字典不存在".to_string()));
         }
         let dict_code_path = dict_info.as_ref().unwrap().dict_code_path.clone();
+        tracing::info!("禁用字典批量:{}", dict_code_path);
         // 构建 SQL 语句
         let update_sql = format!(
             "UPDATE {} SET DATA_STATUS = $1 WHERE DICT_CODE_PATH LIKE CONCAT($2,'%')",
@@ -506,12 +536,12 @@ impl BmbpDictService {
         );
         let mut tx = DB_POOL.get().unwrap().begin().await?;
         let mut update_query = sqlx::query(&update_sql)
-            .bind(DATA_ENABLE)
+            .bind(DATA_DISABLE)
             .bind(dict_code_path);
         let result = update_query.execute(&mut *tx).await;
         if result.is_err() {
             tx.rollback().await?;
-            return Err(BmbpErr::valid("禁用字典失败".to_string()));
+            return Err(BmbpErr::valid("停用字典失败".to_string()));
         }
         tx.commit().await?;
         Ok(result?.rows_affected() as usize)
@@ -521,11 +551,11 @@ impl BmbpDictService {
         if dict_vo.data_id.is_empty() {
             return Err(BmbpErr::valid("请指定待删除的字典".to_string()));
         }
-        let dict_info = Self::get_info_by_id(&dict_vo.data_id).await?;
+        let mut dict_info = Self::get_info_by_id(&dict_vo.data_id).await?;
         if dict_info.is_none() {
             return Err(BmbpErr::valid("指定的字典不存在".to_string()));
         }
-
+        let dict_vo = dict_info.unwrap();
         let dict_vec = Self::get_list_by_parent_code(&dict_vo.dict_code).await?;
         if !dict_vec.is_empty() {
             return Err(BmbpErr::valid("请先删除子字典".to_string()));
@@ -571,10 +601,11 @@ impl BmbpDictService {
                 in_clause
             );
 
-            let mut update_query = sqlx::query(&update_sql).bind(DATA_ENABLE);
+            let mut update_query = sqlx::query(&update_sql);
             for code in dict_code_vec.iter() {
                 update_query = update_query.bind(code);
             }
+            update_query = update_query.bind(DATA_ENABLE);
             let result = update_query.execute(&mut *tx).await;
             if result.is_err() {
                 tx.rollback().await?;
@@ -609,7 +640,7 @@ impl BmbpDictService {
             let result = update_query.execute(&mut *tx).await;
             if result.is_err() {
                 tx.rollback().await?;
-                return Err(BmbpErr::valid("删除字典失败".to_string()));
+                return Err(BmbpErr::valid("停用字典失败".to_string()));
             }
             rows_affected += result?.rows_affected() as usize;
         }

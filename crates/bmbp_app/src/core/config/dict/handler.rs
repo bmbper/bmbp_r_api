@@ -4,6 +4,7 @@ use crate::core::config::dict::service::BmbpDictService;
 use bmbp_orm::PageData;
 use salvo::prelude::*;
 use std::collections::HashMap;
+use tracing_log::log::info;
 
 #[handler]
 pub async fn tree(
@@ -43,6 +44,7 @@ pub async fn page(
         .parse_body::<PageVo<BmbpConfigDict>>()
         .await
         .unwrap_or(PageVo::default());
+    info!("page dict_vo:{:?}", dict_vo);
     let dict_page = BmbpDictService::get_page(&dict_vo).await?;
     Ok(RespVo::ok(dict_page))
 }

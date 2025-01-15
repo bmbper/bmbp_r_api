@@ -49,6 +49,9 @@ impl BmbpTree<BmbpConfigVars> for BmbpConfigVars {
     {
         self.vars_children = Some(children);
     }
+    fn node_order(&self) -> isize {
+        self.data_order.clone() as isize
+    }
 }
 #[derive(Default,Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]

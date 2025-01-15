@@ -51,6 +51,10 @@ impl BmbpTree<BmbpConfigDict> for BmbpConfigDict {
     {
         self.dict_children = Some(children);
     }
+
+    fn node_order(&self) -> isize {
+        self.data_order as isize
+    }
 }
 impl OrmTableTrait for BmbpConfigDict {
     fn table_name() -> String {

@@ -4,6 +4,7 @@ use salvo::__private::tracing;
 use salvo::prelude::TcpListener;
 use salvo::{Listener, Router, Server};
 use tracing_log::log::info;
+use tracing_subscriber::EnvFilter;
 
 mod apc;
 mod bpc;
@@ -14,8 +15,13 @@ mod tpc;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing_subscriber::fmt().init();
-
+    tracing_subscriber::fmt()
+        .with_env_filter(EnvFilter::from_default_env()
+            .add_directive("sqlx=debug".parse().unwrap())
+            .add_directive("salvo=info".parse().unwrap())
+            .add_directive("bmbp_app=info".parse().unwrap())
+        )
+        .init();
     let app_config = config::load_app_config("./bmbp.toml").unwrap_or(AppConfig::default());
     let host = app_config.server.host.clone();
     let port = app_config.server.port.clone();

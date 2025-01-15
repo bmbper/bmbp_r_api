@@ -11,6 +11,7 @@ pub trait BmbpTree<T> {
     fn set_children(&mut self, children: Vec<Self>)
     where
         Self: Sized;
+    fn node_order(&self)->isize;
 }
 
 pub const BMBP_TREE_ROOT_NODE: &str = "#";
@@ -89,6 +90,7 @@ impl BmbpTreeUtil {
             tree_node.set_children(children_tree_node_vec);
             tree_node_vec.push(tree_node);
         }
+        tree_node_vec.sort_by(|a, b| a.node_order().cmp(&b.node_order()));
         tree_node_vec
     }
     fn build_tree_root_ref_vec<'a, T>(
