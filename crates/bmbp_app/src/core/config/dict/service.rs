@@ -742,8 +742,8 @@ impl BmbpDictService {
         if dict_info.is_none() {
             return Err(BmbpErr::valid("指定的字典不存在".to_string()));
         }
-        let dict_code = dict_info.unwrap().dict_code;
-        let dict_vec = Self::get_list_by_parent_code_path(&dict_code).await?;
+        let dict_code_path = dict_info.unwrap().dict_code_path;
+        let dict_vec = Self::get_list_by_parent_code_path(&dict_code_path).await?;
 
         let dict_vec_tree = BmbpTreeUtil::build::<BmbpConfigDict>(dict_vec);
 
